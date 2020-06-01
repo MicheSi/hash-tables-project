@@ -20,8 +20,9 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
+    def __init__(self, capacity=MIN_CAPACITY):
         self.capacity = capacity
+        self.storage = [None] * capacity
 
 
     def get_num_slots(self):
@@ -34,7 +35,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.length = len(self.storage)
+        return self.length
 
 
     def get_load_factor(self):
@@ -86,7 +88,7 @@ class HashTable:
         Implement this.
         """
         slot = self.hash_index(key)
-        self.capacity[slot] = HashTableEntry(key, value)
+        self.storage[slot] = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -99,7 +101,7 @@ class HashTable:
         if key is None:
             print(f'{key} not found')
         else:
-            put(key, None)
+            self.put(key, None)
 
 
     def get(self, key):
@@ -111,7 +113,7 @@ class HashTable:
         Implement this.
         """
         slot = self.hash_index(key)
-        hash_entry = self.capacity[slot]
+        hash_entry = self.storage[slot]
 
         if hash_entry is not None:
             return hash_entry.value
