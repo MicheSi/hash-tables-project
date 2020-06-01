@@ -54,9 +54,16 @@ class HashTable:
 
         Implement this, and/or DJB2.
         """
+        FNV_Prime = 1099511628211
+        FNV_offset_basis = 14695981039346656037
 
-        # Your code here
+        hash = FNV_offset_basis
 
+        for char in key:
+            hash = hash * FNV_Prime
+            hash = hash ^ ord(char)
+        
+        return hash
 
     def djb2(self, key):
         """
@@ -76,8 +83,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
