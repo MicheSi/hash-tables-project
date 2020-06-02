@@ -109,10 +109,14 @@ class HashTable:
         
         prev = cur
 
-        while cur is not None and cur.key != key:
-            prev = cur
+        while cur.next is not None:
+            if cur.key == key:
+                cur.value = value
             cur = cur.next
-        prev.next = HashTableEntry(key, value)
+        if cur.key == key:
+            cur.value = value
+        else:
+            cur.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
