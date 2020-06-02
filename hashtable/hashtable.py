@@ -11,14 +11,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-class SLL:
-    def __init__(self):
-        self.head = None
-
-    def add_to_head(self, node):
-        node.next = self.head
-        self.head = node
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -101,8 +93,25 @@ class HashTable:
 
         Implement this.
         """
+        # No Collisions
+        # slot = self.hash_index(key)
+        # self.storage[slot] = HashTableEntry(key, value)
+
+        # With Collisions
+        self.size += 1
+
         slot = self.hash_index(key)
-        self.storage[slot] = HashTableEntry(key, value)
+        cur = self.storage[slot]
+
+        if cur is None:
+            self.storage[slot] = HashTableEntry(key, value)
+            return cur
+        
+        prev = cur
+        while cur is not None:
+            prev = cur
+            cur = cur.next
+        prev.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -112,10 +121,33 @@ class HashTable:
 
         Implement this.
         """
-        if key is None:
-            print(f'{key} not found')
+        # No Collisions
+        # if key is None:
+        #     print(f'{key} not found')
+        # else:
+        #     self.put(key, None)
+
+        # With Collisions
+        index = self.hash_index(key)
+        cur = self.storage[index]
+
+        if cur.key == key:
+            self.storage[index] = cur.next
+            return cur
+
+        prev = cur
+        cur = cur.next
+
+        while cur is not None and cur.key != key:
+            prev = cur
+            cur = cur.next
+        if cur is None:
+            print(f'{key} is not found')
+            return None
         else:
-            self.put(key, None)
+            self.size -= 1
+            prev.next = cur.next
+
 
 
     def get(self, key):
@@ -126,14 +158,27 @@ class HashTable:
 
         Implement this.
         """
-        slot = self.hash_index(key)
-        hash_entry = self.storage[slot]
+        # No Collisions
+        # slot = self.hash_index(key)
+        # hash_entry = self.storage[slot]
 
-        if hash_entry is not None:
-            return hash_entry.value
+        # if hash_entry is not None:
+        #     return hash_entry.value
 
-        return None
+        # return None
 
+        # With Collisions
+        index = self.hash_index(key)
+
+        cur = self.storage[index]
+
+        while cur is not None and cur.key != key:
+            cur = cur.next
+
+        if cur is None:
+            return None
+        else:
+            return cur.value
 
     def resize(self, new_capacity):
         """
