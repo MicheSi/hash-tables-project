@@ -44,7 +44,7 @@ class HashTable:
 
         Implement this.
         """
-        return self.storage / self.length
+        return self.size / self.length
 
 
     def fnv1(self, key):
@@ -105,10 +105,11 @@ class HashTable:
 
         if cur is None:
             self.storage[slot] = HashTableEntry(key, value)
-            return cur
+            return
         
         prev = cur
-        while cur is not None:
+
+        while cur is not None and cur.key != key:
             prev = cur
             cur = cur.next
         prev.next = HashTableEntry(key, value)
@@ -187,7 +188,22 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # create new bigger table
+        self.capacity = new_capacity
+        new_HT = [None] * self.capacity
+
+        # go through current list
+        for i in range(len(self.storage)):
+            cur = self.storage[i]
+
+            while cur is not None:
+                new_slot = self.hash_index(cur.key)
+                new_HT[new_slot] = cur
+                cur = cur.next
+
+        self.storage = new_HT
+        
+            
 
 
 
