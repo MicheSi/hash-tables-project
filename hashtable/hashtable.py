@@ -1,5 +1,3 @@
-from sll import SLL
-
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -13,6 +11,13 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
+class SLL:
+    def __init__(self):
+        self.head = None
+
+    def add_to_head(self, node):
+        node.next = self.head
+        self.head = node
 
 class HashTable:
     """
@@ -25,7 +30,7 @@ class HashTable:
     def __init__(self, capacity=MIN_CAPACITY):
         self.capacity = capacity
         self.storage = [None] * capacity
-
+        self.size = 0
 
     def get_num_slots(self):
         """
