@@ -1,3 +1,5 @@
+from sll import SLL
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -45,7 +47,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.storage / self.length
 
 
     def fnv1(self, key):
