@@ -1,5 +1,31 @@
 def word_count(s):
-    # Your code here
+    count = {}
+    # change to all lowercase to make case insensitive
+    words = s.lower()
+
+    # ignore these characters " : ; , . - + = / \ | [ ] { } ( ) * ^ &
+    ignore = '" : ; , . - + = / \ | [ ] { } ( ) * ^ &'.split(' ')
+    # replace ignored characters with ''
+    for char in ignore:
+        words = words.replace(char, '')
+
+    # split string at spaces to count total words in string
+    words = words.split()
+    
+    # iterate through words
+    for word in words:
+        # if input contains no characters, return empty dictionary
+        if word == '':
+            return {}
+        if word in count:
+            count[word] += 1
+        else:
+            count[word] = 1
+    return count
+
+    
+
+
 
 
 
