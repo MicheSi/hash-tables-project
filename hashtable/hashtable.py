@@ -44,6 +44,7 @@ class HashTable:
 
         Implement this.
         """
+        # Number of items stored in table / number of slots in the array
         return self.size / self.length
 
 
@@ -98,23 +99,28 @@ class HashTable:
         # self.storage[slot] = HashTableEntry(key, value)
 
         # With Collisions
+        # increment count for table size and load factor
         self.size += 1
 
+        # assign slot using hash index
         slot = self.hash_index(key)
+        # assign current to slot you're on
         cur = self.storage[slot]
-
+        # if current slot is empty, create new & insert
         if cur is None:
             self.storage[slot] = HashTableEntry(key, value)
             return
-        
-        prev = cur
-
+        # if not empty, iterate through list
         while cur.next is not None:
+            # if cur key is key, assign cur value to vale
             if cur.key == key:
                 cur.value = value
+            # assign cur to the next slot in list
             cur = cur.next
+        # is cur key is same as key, assign cur value to value
         if cur.key == key:
             cur.value = value
+        # add new slot to end of list
         else:
             cur.next = HashTableEntry(key, value)
 
@@ -133,22 +139,27 @@ class HashTable:
         #     self.put(key, None)
 
         # With Collisions
+        # assign slot/index using hash index method
         index = self.hash_index(key)
+        # assign cur to index you're on
         cur = self.storage[index]
-
+        # is cur key is same as key, assign index to next and return cur
         if cur.key == key:
             self.storage[index] = cur.next
             return cur
-
+        # assign prev index to current index
         prev = cur
+        # assign current index to next
         cur = cur.next
-
+        # iterate list, if not None and not key, continue moving pointers down list
         while cur is not None and cur.key != key:
             prev = cur
             cur = cur.next
+        # if not found, return error message and None
         if cur is None:
             print(f'{key} is not found')
             return None
+        # if found, decrement size and remove by moving pointer to next node
         else:
             self.size -= 1
             prev.next = cur.next
@@ -173,15 +184,17 @@ class HashTable:
         # return None
 
         # With Collisions
+        # assign index
         index = self.hash_index(key)
-
+        # assign current to index of list
         cur = self.storage[index]
-
+        # iterate through list - if not None and not key, move pointer to next
         while cur is not None and cur.key != key:
             cur = cur.next
-
+        # if not found, return None
         if cur is None:
             return None
+        # key found - return value
         else:
             return cur.value
 
