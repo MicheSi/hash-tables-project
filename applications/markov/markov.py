@@ -7,6 +7,8 @@ with open("input.txt") as f:
 
 # TODO: analyze which words can follow other words
 following_words = {}
+start_word = {}
+end_word = {}
 
 words_array = words.split()
 
@@ -28,6 +30,10 @@ for i in range(len(words_array)):
         following_words[words_array[i]] = []
 
 # TODO: construct 5 random sentences
+
+
+
+
 # Loop through
 # Print word
 # If it's a 'stop" word, stop
