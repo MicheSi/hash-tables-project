@@ -37,9 +37,21 @@ def histo():
             count[word] = '#'
 
     # sort by number of frequency
-    num_of_freq = list(count.items())
-    num_of_freq.sort(key=lambda e:e[1], reverse=True)
+    num_of_freq = {key: val for key, val in sorted(
+        count.items(), key=lambda e: len(e[1]), reverse=True
+    )}
 
     # sort alphabetically
-    freq_by_alpha = list(count.items())
-    freq_by_alpha.sort(key=lambda e: e)
+    freq_by_alpha = {key: val for key, val in sorted(
+        count.items(), key=lambda e: e
+    )}
+
+    # print number of frequency
+    for key in num_of_freq:
+        print(f"""{key.ljust(len(longest_word), ' ')} {num_of_freq[key]}""") #ljust string method returns string left justified in a string of length width
+
+    # print in alphabetical order
+    for key in freq_by_alpha:
+        print(f"""{key.ljust(len(longest_word), ' ')} {freq_by_alpha[key]}""")
+
+print(histo())
